@@ -1,0 +1,9 @@
+{
+	"name": "adfrmc2023",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b1582c21-386b-4fcc-81e2-331e55aba57c",
+		"tenantId": "10d99e31-3651-4a64-99a5-3abaec8dea58"
+	}
+}
