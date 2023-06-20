@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "ClienteEDD_20230524.csv",
+				"fileName": "ClienteEDD_20230602.csv",
 				"container": "raw-edd"
 			},
 			"columnDelimiter": "|",
