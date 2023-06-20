@@ -1,0 +1,25 @@
+{
+	"name": "csv_destino_01",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azbsprueba",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_primera_prueba"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "procesada-edd"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
