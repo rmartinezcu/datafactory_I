@@ -1,0 +1,22 @@
+{
+	"name": "parquet_dest_01",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azbsprueba",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_primera_prueba"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "procesada-edd"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
