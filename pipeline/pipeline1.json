@@ -41,7 +41,15 @@
 						"type": "DelimitedTextSource",
 						"additionalColumns": [
 							{
-								"value": "$$FILEPATH"
+								"name": "fecha_proc",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "estado_proc",
+								"value": "\"\""
 							}
 						],
 						"storeSettings": {
@@ -54,12 +62,14 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -80,7 +90,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "parquet_dest_01",
+						"referenceName": "csv_destino_01",
 						"type": "DatasetReference"
 					}
 				]
