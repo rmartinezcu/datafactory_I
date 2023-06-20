@@ -1,0 +1,36 @@
+{
+	"name": "az_01_sqldb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "az_db01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_primera_prueba"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "TipoPersona",
+				"type": "varchar"
+			},
+			{
+				"name": "TipoDocumento",
+				"type": "varchar"
+			},
+			{
+				"name": "NumeroDocumento",
+				"type": "varchar"
+			},
+			{
+				"name": "CodigoPersona",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "PERSONA"
+		}
+	}
+}
