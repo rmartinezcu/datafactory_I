@@ -1,0 +1,15 @@
+{
+	"name": "az_db01_destino",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "az_db01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_DB"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
