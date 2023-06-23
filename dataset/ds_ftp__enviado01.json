@@ -1,0 +1,22 @@
+{
+	"name": "ds_ftp__enviado01",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "az_cuenta_blobftp",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_FTP"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "envios"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
