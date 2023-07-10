@@ -1,0 +1,31 @@
+{
+	"name": "PersonapruebaCorreo",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pruebaCorreo",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dsTrabaCorreo"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "ClienteEDD_20230602.csv",
+				"container": "raw-edd"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "TipoPersona|TipoDocumento|NumeroDocumento|CodigoPersona|NombreCompleto|FechaNacimiento|Pais|EstadoCivil|ZonaGeograficaDpto|Direccion|Telefono|CorreoElectronico|Profesion|GiroEconomico|GrupoEconomico|RepresentanteLegal|FechaRegistro",
+				"type": "String"
+			}
+		]
+	}
+}
