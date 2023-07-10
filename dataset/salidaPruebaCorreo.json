@@ -1,0 +1,27 @@
+{
+	"name": "salidaPruebaCorreo",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pruebaCorreo",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dsTrabaCorreo"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "raw-edd-out"
+			},
+			"columnDelimiter": "|",
+			"compressionCodec": "ZipDeflate",
+			"compressionLevel": "Optimal",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

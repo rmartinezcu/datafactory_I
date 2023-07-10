@@ -9,91 +9,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DelimitedText1",
+						"referenceName": "PersonapruebaCorreo",
 						"type": "DatasetReference"
 					},
 					"timeout": "0.12:00:00",
 					"sleep": 10
 				}
-			},
-			{
-				"name": "cp_ori_dest",
-				"description": "Copiado de origen a otra carpeta en otro formato",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Validation1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"additionalColumns": [
-							{
-								"name": "fecha_proc",
-								"value": {
-									"value": "@utcnow()",
-									"type": "Expression"
-								}
-							},
-							{
-								"name": "estado_proc",
-								"value": "PROCESADO"
-							}
-						],
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DelimitedText1",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "csv_destino_01",
-						"type": "DatasetReference"
-					}
-				]
 			},
 			{
 				"name": "Copy data1",
@@ -126,90 +47,22 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "TipoPersona",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "TipoPersona",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "TipoDocumento",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "TipoDocumento",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "NumeroDocumento",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "NumeroDocumento",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "CodigoPersona",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CodigoPersona",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedText1",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "az_01_sqldb",
+						"referenceName": "PersonapruebaCorreo",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Copy data2",
-				"type": "Copy",
+				"name": "envioCorreo",
+				"description": "Se envia el correo conjuntamente con el Logic App , prueba para este procesamiento para su uso en el proyecto",
+				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "cp_ori_dest",
+						"activity": "Copy data1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -224,254 +77,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "ParquetSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "ParquetWriteSettings"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "TipoPersona",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "TipoPersona",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "TipoDocumento",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "TipoDocumento",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "NumeroDocumento",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "NumeroDocumento",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "CodigoPersona",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CodigoPersona",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "NombreCompleto",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "NombreCompleto",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "FechaNacimiento",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "FechaNacimiento",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Pais",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Pais",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "EstadoCivil",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "EstadoCivil",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "ZonaGeograficaDpto",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ZonaGeograficaDpto",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Direccion",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Direccion",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Telefono",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Telefono",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "CorreoElectronico",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CorreoElectronico",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Profesion",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Profesion",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "GiroEconomico",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "GiroEconomico",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "GrupoEconomico",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "GrupoEconomico",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "RepresentanteLegal",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "RepresentanteLegal",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "FechaRegistro",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "FechaRegistro",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+					"url": "https://prod-94.eastus.logic.azure.com:443/workflows/669e2dd16e6542c3989a53ca65a16b96/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=-dx5EHfdOaa59HwgBRxx6dIAnR0yrHIdM2Z158hlCQM",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"title\":\"\",\n\"message\":\"\",\n\"color\":\"\",\n\"dataFactoryName\":\"\",\n\"pipelineName\":\"\",\n\"pipelineRunId\":\"\",\n\"time\":\"\"\n}",
+						"type": "Expression"
 					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DelimitedText1",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "ds_ftp__enviado01",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			}
 		],
 		"annotations": []
