@@ -47,11 +47,36 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "PersonapruebaCorreo",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "salidaPruebaCorreo",
 						"type": "DatasetReference"
 					}
 				]
@@ -80,7 +105,7 @@
 					"url": "https://prod-94.eastus.logic.azure.com:443/workflows/669e2dd16e6542c3989a53ca65a16b96/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=-dx5EHfdOaa59HwgBRxx6dIAnR0yrHIdM2Z158hlCQM",
 					"method": "POST",
 					"body": {
-						"value": "{\n\"title\":\"\",\n\"message\":\"\",\n\"color\":\"\",\n\"dataFactoryName\":\"\",\n\"pipelineName\":\"\",\n\"pipelineRunId\":\"\",\n\"time\":\"\"\n}",
+						"value": "{\n\"title\":\"PIPELINE RUN TERMINADO\",\n\"message\":\"DEMO TERMINADA\",\n\"color\":\"Green\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"time\":\"@{utcNow()}\"\n}",
 						"type": "Expression"
 					}
 				}
