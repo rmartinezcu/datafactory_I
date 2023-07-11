@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory",
+			"defaultValue": "adfrmc2023"
+		},
+		"az_cuenta_blobftp_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"az_cuenta_blobftp\""
+		},
+		"az_db01_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"az_db01\""
+		},
+		"azbsprueba_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"azbsprueba\""
+		},
+		"pruebaCorreo_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"pruebaCorreo\""
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI de la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas."
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Token de SAS para la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adfrmc2023_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"az_cuenta_blobftp_connectionString": {
+						"value": "[parameters('az_cuenta_blobftp_connectionString')]"
+					},
+					"az_db01_connectionString": {
+						"value": "[parameters('az_db01_connectionString')]"
+					},
+					"azbsprueba_connectionString": {
+						"value": "[parameters('azbsprueba_connectionString')]"
+					},
+					"pruebaCorreo_connectionString": {
+						"value": "[parameters('pruebaCorreo_connectionString')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
