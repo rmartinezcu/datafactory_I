@@ -1,0 +1,10 @@
+{
+	"name": "lk_azKeyvault2023",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://keyVaulTest2023.vault.azure.net/"
+		}
+	}
+}
